@@ -8,18 +8,27 @@ A small [Steamodded](https://github.com/Steamodded/smods) mod for Balatro. Each 
 | 7 | Random vanilla seal |
 | 12 | Random vanilla edition |
 
-Each threshold triggers once. Scoring displays a brief XP status using Balatro's existing card feedback. The mod has no art, custom UI, or runtime AI.
+Each threshold triggers once. Evolution uses SMODS seeded polls and normal card setters.
 
 ## Install
 
 1. Install Lovely and Steamodded for your Balatro version.
-2. Put this repository's folder in `%AppData%\Balatro\Mods\` on Windows. `mod.json`, `main.lua`, and `lovely.toml` should sit directly in that folder.
+2. Put this repository's folder in `%AppData%\Balatro\Mods\` on Windows. Keep `mod.json`, `main.lua`, and `lovely.toml` directly inside the folder.
 3. Launch Balatro and enable **Evolutionary Deck** in the Mods menu.
+4. Score the same card repeatedly. Debug lines are tagged `EvolutionaryDeck` in the Lovely log under `%AppData%\Balatro\Mods\lovely\log\`.
 
-Score the same card repeatedly. The card should gain an enhancement on its third scored use. Debug lines are tagged `EvolutionaryDeck` in the Lovely log under `%AppData%\Balatro\Mods\lovely\log\`.
+Scoring also shows a brief XP status using Balatro's existing card feedback. A row of 12 pips appears along the bottom of each playing card. Each filled pip is one scored use. The pip at the end of each group is ringed.
+
+| Pips | Color | Evolution |
+| --- | --- | --- |
+| 1–3 | Blue | Enhancement at 3 |
+| 4–7 | Red | Seal at 7 |
+| 8–12 | Purple | Edition at 12 |
 
 ## Verification and compatibility
 
 Locally, the mod loaded and a card reached XP 3 and gained a Mult enhancement. The seal and edition thresholds have not been observed in live play yet.
+
+On v0.2.0, Steamodded registered the on-card XP draw step at startup. The overlay has not yet been visually inspected in a live run.
 
 The local game was Balatro 1.0.0i with Steamodded 26.829.0 and separate compatibility adjustments to the installed Steamodded files. Those adjustments are not included here. `lovely.toml` contains small patches for that older game build. A clean install on a newer Balatro/Steamodded pairing has not been verified.

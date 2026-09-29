@@ -86,4 +86,38 @@ function eval_card(card, context)
     return effects, post
 end
 
+SMODS.DrawStep {
+    key = 'evodeck_xp',
+    order = 45,
+    conditions = { vortex = false, facing = 'front', front_hidden = false },
+    func = function(card)
+        if not card.playing_card or not card.ability then return end
+
+        local xp = math.min(card.ability.evodeck and card.ability.evodeck.xp or 0, 12)
+        local colors = {G.C.CHIPS, G.C.RED, G.C.PURPLE}
+        local radius, spacing, group_gap = 0.024, 0.056, 0.035
+        local width = 11 * spacing + 2 * group_gap + 2 * radius
+        local x = (card.T.w - width) / 2 + radius
+        local y = card.T.h - 0.105
+
+        love.graphics.push('all')
+        prep_draw(card)
+        for pip = 1, 12 do
+            local group = pip <= 3 and 1 or pip <= 7 and 2 or 3
+            local extra_gap = (pip > 3 and group_gap or 0) + (pip > 7 and group_gap or 0)
+            local px = x + (pip - 1) * spacing + extra_gap
+            local filled = pip <= xp
+            local milestone = pip == 3 or pip == 7 or pip == 12
+
+            if milestone then
+                love.graphics.setColor(colors[group])
+                love.graphics.circle('line', px, y, radius * 1.6)
+            end
+            love.graphics.setColor(filled and colors[group] or {0.08, 0.08, 0.10, 0.8})
+            love.graphics.circle('fill', px, y, radius)
+        end
+        love.graphics.pop()
+    end,
+}
+
 log('Loaded')
