@@ -25,6 +25,28 @@ Scoring also shows a brief XP status using Balatro's existing card feedback. A r
 | 4–7 | Red | Seal at 7 |
 | 8–12 | Purple | Edition at 12 |
 
+## Roadmap
+
+### 1. Finish validating v0.2.0
+
+- Check that the pip row is readable on cards during a run.
+- Follow one physical card through XP 3, 7, and 12; confirm its enhancement, seal, and edition.
+- Save and reload mid-run to confirm XP and threshold flags persist.
+- Confirm an existing enhancement, seal, or edition is never replaced.
+- Fix bugs found in these checks without adding more content.
+
+### 2. Make installation reproducible
+
+- Test a clean install with a current supported Balatro and Steamodded pair.
+- Remove or clearly scope the old-build Lovely patches and local Steamodded adjustments.
+- Publish a small versioned ZIP release with the tested requirements.
+
+### 3. Keep later changes optional
+
+- Add XP to the card tooltip only if the pip row proves insufficient.
+- Consider balance changes only after the basic experiment is fully verified.
+- Keep custom art, extra content, and larger frameworks out of scope for this experiment.
+
 ## Verification and compatibility
 
 Locally, the mod loaded and a card reached XP 3 and gained a Mult enhancement. The seal and edition thresholds have not been observed in live play yet.
