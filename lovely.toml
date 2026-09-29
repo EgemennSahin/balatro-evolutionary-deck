@@ -1,0 +1,61 @@
+[manifest]
+version = "1.0.0"
+priority = 10
+
+# The installed 2024 Balatro build has no matching closer for SMODS' legacy
+# first_pass badge loop after the seal/sticker compatibility patches run.
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''if v == 'pinned_left' then info_queue[#info_queue+1] = {key = 'pinned_left', set = 'Other'} end
+        end
+    end'''
+position = "after"
+payload = "end"
+match_indent = true
+
+# The 2024 game already shows Yorick's event feedback after this line, so the
+# current SMODS early return makes its legacy function invalid.
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''self.ability.yorick_discards = self.ability.yorick_discards - 1
+                        return nil, true'''
+position = "at"
+payload = "self.ability.yorick_discards = self.ability.yorick_discards - 1"
+match_indent = true
+
+# Balatro 1.0.0i predates the deck-skin table introduced in newer releases.
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "function Game:start_up()"
+position = "after"
+payload = "G.COLLABS = G.COLLABS or {options = {}, colour_palettes = {}, pos = {}}"
+match_indent = true
+
+# This Balatro version calculates sell price inside set_cost_value; SMODS' split
+# method patch expects the newer rental-price line to close that function.
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = '''    self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)
+end'''
+position = "at"
+payload = '''    self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)
+end
+
+function Card:set_sell_value()
+    self.sell_cost = math.max(1, math.floor(self.cost/2)) + (self.ability.extra_value or 0)
+end'''
+match_indent = false
+
+# The current SMODS draw patch expects a card list from a newer vanilla
+# hand-space calculation. For this old build, retain the top cards to draw.
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "local hand_space = math.min(#G.deck.cards, G.hand.config.card_limit - #G.hand.cards)"
+position = "after"
+payload = "local cards_to_draw = {}; for i = 1, hand_space do cards_to_draw[i] = G.deck.cards[#G.deck.cards - i + 1] end"
+match_indent = true

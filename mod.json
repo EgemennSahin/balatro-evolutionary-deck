@@ -1,0 +1,11 @@
+{
+  "id": "EvolutionaryDeck",
+  "name": "Evolutionary Deck",
+  "author": ["Local experiment"],
+  "description": "Playing cards gain vanilla enhancements, seals, and editions from scored use.",
+  "prefix": "evodeck",
+  "main_file": "main.lua",
+  "priority": 0,
+  "version": "0.1.1",
+  "dependencies": ["Steamodded (>=1.0.0~BETA-0711a)"]
+}
